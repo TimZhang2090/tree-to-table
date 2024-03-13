@@ -1,15 +1,12 @@
 {
   "name": "tree-to-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TimZhang2090/tree-to-table.git"
-  },
+  "type": "module",
   "keywords": [
     "tree",
     "table",
@@ -18,8 +15,15 @@
   ],
   "author": "Tim Zhang",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimZhang2090/tree-to-table.git"
+  },
   "bugs": {
     "url": "https://github.com/TimZhang2090/tree-to-table/issues"
   },
-  "homepage": "https://github.com/TimZhang2090/tree-to-table#readme"
+  "homepage": "https://github.com/TimZhang2090/tree-to-table#readme",
+  "devDependencies": {
+    "typescript": "^5.4.2"
+  }
 }
