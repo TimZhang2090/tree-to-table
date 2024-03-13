@@ -75,6 +75,9 @@ const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
 //         ]
 //     }
 // ]
-
-`tableColumns` means the number of columns in the table.
 ```
+
+`columnNum` in `columns` means the column in which the cell resides.
+`tableColumns` means the number of columns in the table.
+
+[Live Example](https://tree-to-table-env7pcizm-tim2090s-projects.vercel.app/)
