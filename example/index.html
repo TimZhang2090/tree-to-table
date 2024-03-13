@@ -1,0 +1,97 @@
+<table>
+    <thead>
+      <tr id="header-tr"></tr>
+    </thead>
+  
+    <tbody id="tbody"></tbody>
+</table>
+
+
+<script type="module">
+import TreeToTable from '../dist/index.js'
+
+const treeToTableIns = new TreeToTable('children')
+
+let treeData = {
+  name: '1-1',
+  children: [
+    {
+      name: '2-1',
+      children: [
+        {
+            name: '3-1',
+        },
+        {
+            name: '3-2',
+        },
+      ]
+    },
+    {
+        name: '2-2'
+    }
+  ],
+}
+
+const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
+console.log('rows :', rows)
+
+const fragmentForHeader = document.createDocumentFragment()
+Array.from({ length: tableColumns }).forEach((item, index) => {
+    let th = document.createElement('th')
+    th.textContent = `Level ${index + 1}`
+
+    fragmentForHeader.appendChild(th)
+})
+document.getElementById('header-tr').appendChild(fragmentForHeader)
+
+
+const fragmentForBody = document.createDocumentFragment()
+rows.forEach((oneRow, rowIndex) => {
+    let tr = document.createElement('tr')
+
+    oneRow.columns.forEach((oneColumn) => {
+        let td = document.createElement('td')
+
+        td.textContent = oneColumn.name
+        // set rowspan
+        td.setAttribute("rowspan",  oneColumn.rowspan)
+
+        tr.appendChild(td)
+    })
+
+    fragmentForBody.appendChild(tr)
+})
+document.getElementById('tbody').appendChild(fragmentForBody)
+</script>
+
+
+<style type="text/css">
+thead {
+    border-bottom: 2px solid rgb(160 160 160);
+    text-align: center;
+    background-color: #2c5e77;
+    color: #fff;
+}
+
+tbody {
+    background-color: #e4f0f5;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rgb(140 140 140);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+th,
+td {
+    border: 1px solid rgb(160 160 160);
+    padding: 8px 10px;
+}
+
+tbody > tr > td:last-of-type {
+    text-align: center;
+}
+</style>
