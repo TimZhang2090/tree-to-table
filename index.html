@@ -1,3 +1,5 @@
+<button id="rebuild-button">Random Data</button>
+
 <table>
     <thead>
       <tr id="header-tr"></tr>
@@ -13,59 +15,107 @@ import TreeToTable from '../dist/index.js'
 const treeToTableIns = new TreeToTable('children')
 
 let treeData = {
-  name: '1-1',
-  children: [
-    {
-      name: '2-1',
-      children: [
-        {
-            name: '3-1',
-        },
-        {
-            name: '3-2',
-        },
-      ]
-    },
-    {
-        name: '2-2'
-    }
-  ],
+    name: '1-1',
+    // children: [
+    //     {
+    //     name: '2-1',
+    //     children: [
+    //         {
+    //             name: '3-1',
+    //         },
+    //         {
+    //             name: '3-2',
+    //         },
+    //     ]
+    //     },
+    //     {
+    //         name: '2-2'
+    //     }
+    // ],
 }
 
-const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
-console.log('rows :', rows)
+function buildChildren(treeNode, nextLevel, max) {
+    if (nextLevel > max) return
 
-const fragmentForHeader = document.createDocumentFragment()
-Array.from({ length: tableColumns }).forEach((item, index) => {
-    let th = document.createElement('th')
-    th.textContent = `Level ${index + 1}`
+    if (!treeNode.children) {
+        treeNode.children = []
+    }
 
-    fragmentForHeader.appendChild(th)
-})
-document.getElementById('header-tr').appendChild(fragmentForHeader)
+    let random = Math.floor(Math.random() * 3 + 1)
+    for (let i = 0; i < random; i++) {
+        treeNode.children.push({
+            name: `${nextLevel}-${i+1}`
+        })
+    }
 
+    for (let child of treeNode.children) {
+        if (nextLevel > 2) {
+            if (Math.random() > 0.5) {
+                buildChildren(child, nextLevel + 1, max)
+            }
+        } else {
+            buildChildren(child, nextLevel + 1, max)
+        }
+    }
+}
 
-const fragmentForBody = document.createDocumentFragment()
-rows.forEach((oneRow, rowIndex) => {
-    let tr = document.createElement('tr')
+function renderTable(rows, tableColumns) {
+    const headerTr = document.getElementById('header-tr')
+    headerTr.innerHTML = ''
 
-    oneRow.columns.forEach((oneColumn) => {
-        let td = document.createElement('td')
+    const fragmentForHeader = document.createDocumentFragment()
+    Array.from({ length: tableColumns }).forEach((item, index) => {
+        let th = document.createElement('th')
+        th.textContent = `Level ${index + 1}`
 
-        td.textContent = oneColumn.name
-        // set rowspan
-        td.setAttribute("rowspan",  oneColumn.rowspan)
-
-        tr.appendChild(td)
+        fragmentForHeader.appendChild(th)
     })
+    headerTr.appendChild(fragmentForHeader)
 
-    fragmentForBody.appendChild(tr)
+    const tBody = document.getElementById('tbody')
+    tBody.innerHTML = ''
+
+    const fragmentForBody = document.createDocumentFragment()
+    rows.forEach((oneRow, rowIndex) => {
+        let tr = document.createElement('tr')
+
+        oneRow.columns.forEach((oneColumn) => {
+            let td = document.createElement('td')
+
+            td.textContent = oneColumn.name
+            // set rowspan
+            td.setAttribute("rowspan",  oneColumn.rowspan)
+
+            tr.appendChild(td)
+        })
+
+        fragmentForBody.appendChild(tr)
+    })
+    tBody.appendChild(fragmentForBody)
+}
+
+
+buildChildren(treeData, 2, 5)
+const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
+renderTable(rows, tableColumns)
+
+
+document.getElementById('rebuild-button').addEventListener('click', () => {
+    treeData = {
+        name: '1-1',
+    }
+    buildChildren(treeData, 2, 5)
+    const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
+    renderTable(rows, tableColumns)
 })
-document.getElementById('tbody').appendChild(fragmentForBody)
 </script>
 
 
 <style type="text/css">
+#rebuild-button{
+    margin-bottom: 20px;
+}
+
 thead {
     border-bottom: 2px solid rgb(160 160 160);
     text-align: center;

@@ -6,8 +6,7 @@ npm install tree-to-table
 
 ## Example
 ```js
-import treeToTable from 'tree-to-table'
-
+import TreeToTable from 'tree-to-table'
 const treeToTableIns = new TreeToTable('children')
 
 let treeData = {
@@ -78,6 +77,7 @@ const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
 ```
 
 `columnNum` in `columns` means the column in which the cell resides.
+
 `tableColumns` means the number of columns in the table.
 
-[Live Example](https://tree-to-table-env7pcizm-tim2090s-projects.vercel.app/)
+[Live Example](https://tree-to-table.vercel.app/)

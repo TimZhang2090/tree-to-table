@@ -1,6 +1,6 @@
 {
   "name": "tree-to-table",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "convert tree-structured data to table data",
   "main": "dist/index.js",
   "scripts": {
