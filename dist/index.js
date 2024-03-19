@@ -10,9 +10,11 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 // 1 times BFS
 // 4 times DFS
 var TreeToTable = /** @class */ (function () {
-    function TreeToTable(childNodeKey) {
+    function TreeToTable(childNodeKey, nameKey) {
         if (childNodeKey === void 0) { childNodeKey = 'children'; }
+        if (nameKey === void 0) { nameKey = 'name'; }
         this.childNodeKey = childNodeKey;
+        this.nameKey = nameKey;
     }
     TreeToTable.prototype.getMaxDepth = function (root) {
         if (!root)
@@ -88,8 +90,7 @@ var TreeToTable = /** @class */ (function () {
         rows[rowIndex].columns.push({
             rowspan: treeNode.occupiedSpan,
             columnNum: treeNode.columnNum,
-            name: treeNode.name,
-            attributionType: treeNode.attributionType,
+            name: treeNode[this.nameKey],
         });
         if (treeNode[this.childNodeKey] && treeNode[this.childNodeKey].length) {
             for (var _i = 0, _a = treeNode[this.childNodeKey]; _i < _a.length; _i++) {

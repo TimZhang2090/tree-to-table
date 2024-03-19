@@ -1,9 +1,10 @@
 {
   "name": "tree-to-table",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "convert tree-structured data to table data",
   "main": "dist/index.js",
   "scripts": {
+    "build": "npx tsc",
     "test": "node test/index.js"
   },
   "type": "module",

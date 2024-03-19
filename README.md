@@ -5,9 +5,10 @@ Convert tree-structured data to table data, table data has `rowspan` field.
 npm install tree-to-table  
 
 ## Example
+[Example Page](https://tree-to-table.vercel.app/)
+
 ```js
 import TreeToTable from 'tree-to-table'
-const treeToTableIns = new TreeToTable('children')
 
 let treeData = {
   name: '1-1',
@@ -28,6 +29,8 @@ let treeData = {
     }
   ],
 }
+
+const treeToTableIns = new TreeToTable()
 
 const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
 // console.log('rows :', rows)
@@ -75,9 +78,44 @@ const { rows, tableColumns } = treeToTableIns.treeToTable(treeData)
 //     }
 // ]
 ```
+`columnNum` in `columns` represents the number of columns in which the cell resides.
 
-`columnNum` in `columns` means the column in which the cell resides.
+`tableColumns` represents the number of columns owned by the table.
 
-`tableColumns` means the number of columns in the table.
 
-[Live Example](https://tree-to-table.vercel.app/)
+## API
+```js
+// The first parameter specifies the key representing the child node, default is `children`.
+// The second specifies the key representing the name, default is `name`.
+const treeToTableIns = new TreeToTable('children', 'name')
+```
+
+## use in `JSX`
+``` jsx
+<table>
+  <thead>
+    <tr>
+      {
+        Array.from({ length: tableColumns }).map((item, index) => {
+          return <th>Level {index + 1}</th>
+        })
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    {
+      rows.map((oneRow, rowIndex) => {
+        return <tr>
+          {
+            oneRow.columns.map((oneColumn) => {
+              return <td rowspan={oneColumn.rowspan}>{ oneColumn.name }</td>
+            })
+          }
+        </tr>
+      })
+    }
+  </tbody>
+</table>
+```
+****

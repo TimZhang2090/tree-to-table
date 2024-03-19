@@ -2,10 +2,12 @@
 // 4 times DFS
 export default class TreeToTable {
     private childNodeKey
+    private nameKey
     private maxDep
 
-    constructor(childNodeKey = 'children') {
+    constructor(childNodeKey = 'children', nameKey = 'name') {
       this.childNodeKey = childNodeKey
+      this.nameKey = nameKey
     }
   
     getMaxDepth(root) {
@@ -93,7 +95,7 @@ export default class TreeToTable {
       rows[rowIndex].columns.push({
         rowspan: treeNode.occupiedSpan,
         columnNum: treeNode.columnNum,
-        name: treeNode.name,
+        name: treeNode[this.nameKey],
       })
   
       if (treeNode[this.childNodeKey] && treeNode[this.childNodeKey].length) {
